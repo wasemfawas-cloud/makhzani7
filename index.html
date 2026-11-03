@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#145c4b">
+<title>إدارة مخزني</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div><h1>إدارة مخزني</h1><p>نظام بسيط لإدارة الأصناف وحركة المخزون</p></div>
+  <span class="badge">يعمل بدون إنترنت</span>
+</header>
+<main>
+  <section class="summary">
+    <article><small>عدد الأصناف</small><strong id="itemsCount">0</strong></article>
+    <article><small>إجمالي الوارد</small><strong id="inTotal">0</strong></article>
+    <article><small>إجمالي الصادر</small><strong id="outTotal">0</strong></article>
+  </section>
+
+  <section class="panel">
+    <h2>إضافة صنف جديد</h2>
+    <form id="itemForm" class="form-grid">
+      <label>اسم الصنف<input id="itemName" required maxlength="60" placeholder="مثال: سكر"></label>
+      <label>الوحدة
+        <select id="itemUnit">
+          <option>حبة</option><option>كرتون</option><option>كيلو</option>
+          <option>جرام</option><option>لتر</option><option>مل</option>
+          <option>كيس</option><option>علبة</option><option>ربطة</option><option>متر</option>
+        </select>
+      </label>
+      <button class="primary" type="submit">إضافة الصنف</button>
+    </form>
+  </section>
+
+  <section class="panel">
+    <h2>تسجيل حركة مخزون</h2>
+    <form id="moveForm" class="form-grid">
+      <label>الصنف<select id="moveItem" required></select></label>
+      <label>نوع الحركة<select id="moveType"><option value="in">وارد (داخل)</option><option value="out">صادر (خارج)</option></select></label>
+      <label>الكمية<input id="moveQty" type="number" min="0.001" step="any" required placeholder="أدخل الكمية"></label>
+      <label>ملاحظة (اختياري)<input id="moveNote" maxlength="100" placeholder="مثال: شراء أو صرف"></label>
+      <button class="primary" type="submit">حفظ الحركة</button>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><h2>الأصناف والأرصدة</h2><input id="search" class="search" placeholder="ابحث عن صنف..."></div>
+    <div class="table-wrap">
+      <table><thead><tr><th>الصنف</th><th>الوحدة</th><th>إجمالي الداخل</th><th>إجمالي الخارج</th><th>الباقي</th><th>إجراء</th></tr></thead>
+      <tbody id="itemsTable"></tbody></table>
+    </div>
+    <p id="emptyItems" class="empty">لا توجد أصناف بعد. أضف أول صنف من الأعلى.</p>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><h2>آخر الحركات</h2><button id="exportBtn" class="secondary">تصدير نسخة احتياطية</button></div>
+    <div class="table-wrap">
+      <table><thead><tr><th>التاريخ</th><th>الصنف</th><th>الحركة</th><th>الكمية</th><th>ملاحظة</th></tr></thead>
+      <tbody id="movesTable"></tbody></table>
+    </div>
+    <div class="backup-row">
+      <label class="file-label">استعادة نسخة احتياطية<input id="importFile" type="file" accept="application/json"></label>
+      <button id="clearBtn" class="danger">حذف جميع البيانات</button>
+    </div>
+  </section>
+</main>
+<footer>تُحفظ البيانات على هذا الجهاز والمتصفح. صدّر نسخة احتياطية بانتظام.</footer>
+<script src="app.js"></script>
+</body></html>
